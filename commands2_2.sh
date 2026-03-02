@@ -1,6 +1,6 @@
 echo 'export PROXY=course.prafdin.ru' >> ~/.bashrc
 echo 'export TOKEN=devops' >> ~/.bashrc
-echo 'export ID=limekh' >> ~/.bashrc
+echo 'export ID=milyokhin' >> ~/.bashrc
 wget -qO- https://gist.github.com/lawrenceching/41244a182307940cc15b45e3c4997346/raw/0576ea85d898c965c3137f7c38f9815e1233e0d1/install-frp-as-systemd-service.sh | sudo bash
 frpc --version
 
