@@ -32,7 +32,7 @@ jobs:
         script: |
           set -e
           cd /home/anm/DevOps/catty-reminders-app
-          git fetch --all --tags
-          git checkout --detach ${{ github.sha }}
+          git fetch origin ${{ github.sha }}
+          git checkout --detach FETCH_HEAD
           chmod +x deploy.sh test.sh
           ./deploy.sh

@@ -10,10 +10,10 @@ echo "🚀 Deploying Catty..."
 cd "$APP_DIR"
 
 if [ ! -d .venv ]; then
-    python3 -m venv .venv
+    python3 -m venv venv
 fi
 
-.venv/bin/pip install -r requirements.txt -q
+venv/bin/pip install -r requirements.txt -q
 
 DEPLOY_REF="$(git rev-parse HEAD)"
 echo "📝 Setting DEPLOY_REF=$DEPLOY_REF"
