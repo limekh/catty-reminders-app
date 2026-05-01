@@ -22,7 +22,7 @@ jobs:
         chmod +x test.sh deploy.sh
         ./test.sh
 
-    - name: Deploy release commit on VM
+    - name: Deploy via SSH
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.SSH_HOST }}
@@ -30,9 +30,8 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          set -e
           cd /home/anm/DevOps/catty-reminders-app
           git fetch origin ${{ github.sha }}
           git checkout --detach FETCH_HEAD
-          chmod +x deploy.sh test.sh
+          chmod +x deploy.sh
           ./deploy.sh
