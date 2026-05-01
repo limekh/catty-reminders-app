@@ -1,33 +1,23 @@
-# ~/DevOps/catty-reminders-app/deploy.sh
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_DIR="/home/anm/DevOps/catty-reminders-app"
-ENV_FILE="$APP_DIR/.env.deploy"
+APP_NAME="catty-app"
+IMAGE="ghcr.io/limekh/catty-reminders-app:latest"
 
-echo "🚀 Deploying Catty..."
+echo "🚀 Deploying Catty via Docker..."
 
-cd "$APP_DIR"
+echo "Pull image"
+docker pull $IMAGE
 
-if [ ! -d .venv ]; then
-    python3 -m venv venv
-fi
+echo "STOP old container"
+docker stop $APP_NAME || true
+docker rm $APP_NAME || true
 
-venv/bin/pip install -r requirements.txt -q
+echo "RUN new container"
+docker run -d \
+  --name $APP_NAME \
+  -p 8181:8181 \
+  -e DEPLOY_REF=(git rev-parse HEAD) \
+  $IMAGE
 
-DEPLOY_REF="$(git rev-parse HEAD)"
-echo "📝 Setting DEPLOY_REF=$DEPLOY_REF"
-printf 'DEPLOY_REF=%s\n' "$DEPLOY_REF" > "$ENV_FILE"
-
-echo "🔄 Restarting catty-app.service..."
-sudo systemctl restart catty-app.service
-
-sleep 5
-
-if sudo systemctl is-active --quiet catty-app.service; then
-    echo "✅ Catty deployed successfully (ref: $DEPLOY_REF)"
-else
-    echo "❌ Catty service failed to start!"
-    sudo journalctl -u catty-app -n 10 --no-pager
-    exit 1
-fi
+echo "Deploy done"
