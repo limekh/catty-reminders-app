@@ -6,10 +6,16 @@ IMAGE="ghcr.io/limekh/catty-reminders-app:latest"
 
 echo "🚀 Deploying Catty via Docker..."
 
+cd /home/anm/DevOps/catty-reminders-app
+
 echo "Pull image"
 docker pull $IMAGE
 
-echo "STOP old container"
+echo "Stop all containers using port 8181"
+docker ps --filter "publish=8181" -q | xargs -r docker stop
+docker ps -a --filter "publish=8181" -q | xargs -r docker rm
+
+echo "Remove old container"
 docker stop $APP_NAME || true
 docker rm $APP_NAME || true
 
