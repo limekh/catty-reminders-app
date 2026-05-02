@@ -26,7 +26,6 @@ echo "RUN new container"
 docker run -d \
   --name $APP_NAME \
   -p 8181:8181 \
-  -e DEPLOY_REF=$DEPLOY_REF \
   $IMAGE
 
 echo "Deploy done"

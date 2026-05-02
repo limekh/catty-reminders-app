@@ -47,6 +47,8 @@ jobs:
       with:
         context: .
         push: true
+        build-args: |
+          DEPLOY_REF=${{ github.sha }}
         tags: |
           ghcr.io/limekh/catty-reminders-app:latest
           ghcr.io/limekh/catty-reminders-app:${{ github.sha }}
