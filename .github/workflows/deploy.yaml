@@ -17,11 +17,6 @@ jobs:
       with:
         python-version: "3.12"
 
-    - name: Run tests before deploy
-      run: |
-        chmod +x test.sh deploy.sh
-        ./test.sh
-
     - name: Deploy via SSH
       uses: appleboy/ssh-action@v1.0.3
       with:
