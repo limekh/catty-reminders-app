@@ -8,15 +8,12 @@ services:
       - "8181:8181"
 
     environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_NAME: catty_db
-      DB_USER: catty_user
-      DB_PASSWORD: catty_password
-
+      MYSQL_HOST: db
+      MYSQL_USER: catty
+      MYSQL_PASSWORD: cattypass
+      MYSQL_DATABASE: catty
     depends_on:
-      db:
-        condition: service_healthy
+      - db
 
   db:
     image: mysql:8.0
@@ -24,15 +21,10 @@ services:
     restart: always
 
     environment:
-      MYSQL_DATABASE: catty_db
-      MYSQL_USER: catty_user
-      MYSQL_PASSWORD: catty_password
-      MYSQL_ROOT_PASSWORD: rootpassword
-
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 5s
-      retries: 10
+      MYSQL_DATABASE: catty
+      MYSQL_USER: catty
+      MYSQL_PASSWORD: cattypass
+      MYSQL_ROOT_PASSWORD: rootpass
 
     volumes:
       - mysql_data:/var/lib/mysql

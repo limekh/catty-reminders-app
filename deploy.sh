@@ -8,10 +8,10 @@ echo "🚀 Deploying Catty via Docker compose..."
 cd /home/anm/DevOps/catty-reminders-app
 
 echo "Pull image"
-docker pull $IMAGE
+docker compose pull
 
 echo "Stop old containers"
-docker compose down || true
+docker compose down
 
 echo "Start new containers"
 docker compose up -d
