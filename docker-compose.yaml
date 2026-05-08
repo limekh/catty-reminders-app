@@ -1,19 +1,10 @@
 name: catty
 
 services:
-  app:
-    image: ghcr.io/limekh/catty-reminders-app:latest
-    restart: unless-stopped
-    depends_on:
-      - db
-    ports:
-      - "8181:8181"
-    volumes:
-      - ./config.json:/app/config.json:ro
-
   db:
     image: mariadb:11
     restart: unless-stopped
+
     environment:
       MARIADB_DATABASE: catty_reminders
       MARIADB_USER: catty
@@ -22,6 +13,20 @@ services:
 
     volumes:
       - catty-db-data:/var/lib/mysql
+
+  app:
+    image: ${IMAGE_NAME:-ghcr.io/limekh/catty-reminders-app}:${IMAGE_TAG:-latest}
+
+    restart: unless-stopped
+
+    depends_on:
+      - db
+
+    ports:
+      - "8181:8181"
+
+    volumes:
+      - ./config.json:/app/config.json:ro
 
 volumes:
   catty-db-data:
