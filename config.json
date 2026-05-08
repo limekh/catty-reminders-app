@@ -9,6 +9,6 @@
     "port": 3306,
     "user": "catty",
     "password": "cattypass",
-    "database": "catty"
+    "database": "catty_reminders"
   }
 }
