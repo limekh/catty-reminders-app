@@ -1,0 +1,14 @@
+venv/
+.venv/
+
+pycache/
+*.pyc
+.pytest_cache/
+
+.env
+.env.deploy
+
+test_result.xml
+
+.idea/
+.vscode/
