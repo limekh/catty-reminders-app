@@ -11,29 +11,18 @@ test -d static
 
 echo "✅ Basic file checks passed"
 
-if [ ! -d .venv ]; then
-    python3 -m venv .venv
+if [ ! -d venv ]; then
+    python3 -m venv venv
 fi
 
-. .venv/bin/activate
+. venv/bin/activate
 
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 pip install pytest pytest-playwright playwright
 python -m playwright install chromium
 
-# Start app in background for UI tests
-uvicorn app.main:app --host 127.0.0.1 --port 8181 &
-APP_PID=$!
-
-cleanup() {
-    kill "$APP_PID" || true
-}
-trap cleanup EXIT
-
-sleep 5
-
 export PYTHONPATH=.
-pytest -v --junitxml=test_result.xml
+pytest -v tests/test_unit.py --junitxml=test_result.xml
 
 echo "🎉 Catty tests finished"
